@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lusso Interiors | Modern Yaşam Alanları</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* --- TEMEL AYARLAR --- */
+        :root {
+            --primary: #1c1c1c;
+            /* Kömür Siyahı */
+            --accent: #c5a059;
+            /* Mat Altın */
+            --bg-light: #f9f9f9;
+            /* Kırık Beyaz */
+            --text-gray: #666;
+            --border: #e5e5e5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--primary);
+            background: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        /* --- HEADER & NAV (GLASSMORPHISM) --- */
+        header {
+            padding: 30px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .brand {
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .brand span {
+            color: var(--accent);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: var(--primary);
+            position: relative;
+            cursor: pointer;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            bottom: -5px;
+            left: 0;
+            transition: 0.3s;
+        }
+
+        nav a:hover::after,
+        nav a.active::after {
+            width: 100%;
+        }
+
+        .btn-header {
+            padding: 10px 25px;
+            border: 1px solid var(--primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-header:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* --- HAMBURGER MENU --- */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--primary);
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(8px, -8px);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .mobile-menu-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* --- SAYFA YAPISI (SPA Logic) --- */
+        .page-section {
+            display: none;
+            /* Varsayılan olarak gizli */
+            padding-top: 100px;
+            /* Header payı */
+            min-height: 100vh;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- ANASAYFA (CINEMATIC HERO) --- */
+        .hero {
+            height: 100vh;
+            background: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=2000&auto=format&fit=crop') center/cover no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.6));
+        }
+
+        .hero-content {
+            position: relative;
+            color: white;
+            max-width: 800px;
+            padding: 20px;
+            animation: fadeUp 1.2s ease-out;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            padding: 15px 40px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background: #b08d4b;
+        }
+
+        /* --- KOLEKSİYON (ÜRÜNLER) --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .product-card {
+            background: white;
+            transition: 0.4s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-image {
+            height: 400px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .product-cat {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .product-title {
+            font-size: 1.4rem;
+            margin: 5px 0;
+        }
+
+        .product-price {
+            font-weight: 700;
+            color: var(--text-gray);
+        }
+
+        /* --- HİKAYEMİZ (HAKKIMIZDA) --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text h2 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+        }
+
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: var(--text-gray);
+        }
+
+        .stat-box {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border);
+            padding-top: 30px;
+        }
+
+        .stat h3 {
+            font-size: 2.5rem;
+            color: var(--accent);
+        }
+
+        .stat span {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- İLETİŞİM --- */
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 0;
+            background: var(--bg-light);
+        }
+
+        .contact-info {
+            background: var(--primary);
+            color: white;
+            padding: 80px 50px;
+        }
+
+        .contact-info h2 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 40px;
+        }
+
+        .info-item {
+            margin-bottom: 30px;
+        }
+
+        .info-item h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .info-item p {
+            color: #aaa;
+            font-weight: 300;
+        }
+
+        .contact-form-area {
+            padding: 80px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            background: white;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #111;
+            color: white;
+            padding: 60px 50px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .copyright {
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        /* --- MOBİL UYUM --- */
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .btn-header {
+                display: none;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 280px;
+                height: 100vh;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                padding: 80px 30px 30px;
+                box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: 1000;
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 25px;
+            }
+
+            nav a {
+                font-size: 1.1rem;
+                padding: 10px 0;
+            }
+
+            .hero {
+                height: 100vh;
+                background-attachment: scroll;
+                /* Mobilde parallax devre dışı */
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .about-grid,
+            .contact-wrapper,
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form-area {
+                padding: 40px 20px;
+            }
+
+            .contact-info {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" onclick="toggleMenu()"></div>
+
+    <header>
+        <div class="brand">Lusso<span>Interiors</span></div>
+        <nav id="mobileNav">
+            <ul>
+                <li><a onclick="showPage('home')" class="nav-link active">Anasayfa</a></li>
+                <li><a onclick="showPage('collection')\" class="nav-link">Koleksiyon</a></li>
+                <li><a onclick="showPage('about')" class="nav-link">Hikayemiz</a></li>
+                <li><a onclick="showPage('contact')" class="nav-link">İletişim</a></li>
+            </ul>
+        </nav>
+        <a onclick="showPage('contact')" class="btn-header">Randevu Al</a>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    <div id="home" class="page-section active">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Evinizin Ruhunu<br>Baştan Yaratın</h1>
+                <p class="hero-subtitle">İtalyan estetiği ve el işçiliğinin kusursuz uyumu.</p>
+                <button class="btn-primary" onclick="showPage('collection')">Koleksiyonu Keşfet</button>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="section-header">
+                <h2>Öne Çıkan Parçalar</h2>
+                <p>Minimalist çizgiler, masif dokular ve zamansız tasarımlar.</p>
+            </div>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image"><img
+                            src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?q=80&w=800&auto=format&fit=crop"
+                            alt="Koltuk"></div>
+                    <div class="product-info">
+                        <div class="product-cat">Oturma Grubu</div>
+                        <h3 class="product-title">Verona Lounge Chair</h3>
+                        <div class="product-price">₺24.500</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><img
+                            src="https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=800&auto=format&fit=crop"
+                            alt="Sandalye"></div>
+                    <div class="product-info">
+                        <div class="product-cat">Yemek Odası</div>
+                        <h3 class="product-title">Milano Dining Chair</h3>
+                        <div class="product-price">₺8.200</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><img
+                            src="https://images.unsplash.com/photo-1538688525198-9b88f6f53126?q=80&w=800&auto=format&fit=crop"
+                            alt="Lamba"></div>
+                    <div class="product-info">
+                        <div class="product-cat">Aydınlatma</div>
+                        <h3 class="product-title">Nordic Floor Lamp</h3>
+                        <div class="product-price">₺4.850</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="collection" class="page-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>2025 Sonbahar Koleksiyonu</h2>
+                <p>Doğal ahşap ve sürdürülebilir kumaşların modern yorumu.</p>
+            </div>
+
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-image"><img
+                            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop"
+                            alt="Sofa"></div>
+                    <div class="product-info">
+                        <div class="product-cat">Salon</div>
+                        <h3 class="product-title">Chesterfield Modern</h3>
+                        <div class="product-price">₺48.000</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><img
+                            src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?q=80&w=800&auto=format&fit=crop"
+                            alt="Masa"></div>
+                    <div class="product-info">
+                        <div class="product-cat">Aksesuar</div>
+                        <h3 class="product-title">Marble Coffee Table</h3>
+                        <div class="product-price">₺12.400</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><img
+                            src="https://images.unsplash.com/photo-1519947486511-4639940be434?q=80&w=800&auto=format&fit=crop"
+                            alt="Dolap"></div>
+                    <div class="product-info">
+                        <div class="product-cat">Depolama</div>
+                        <h3 class="product-title">Oak Wood Console</h3>
+                        <div class="product-price">₺18.900</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><img
+                            src="https://images.unsplash.com/photo-1505693314120-0d443867891c?q=80&w=800&auto=format&fit=crop"
+                            alt="Yatak"></div>
+                    <div class="product-info">
+                        <div class="product-cat">Yatak Odası</div>
+                        <h3 class="product-title">Royal Bed Frame</h3>
+                        <div class="product-price">₺32.000</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><img
+                            src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=800&auto=format&fit=crop"
+                            alt="Sandalye"></div>
+                    <div class="product-info">
+                        <div class="product-cat">Ofis</div>
+                        <h3 class="product-title">Eames Style Chair</h3>
+                        <div class="product-price">₺6.500</div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><img
+                            src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?q=80&w=800&auto=format&fit=crop"
+                            alt="Sofa"></div>
+                    <div class="product-info">
+                        <div class="product-cat">Salon</div>
+                        <h3 class="product-title">Velvet Blue Sofa</h3>
+                        <div class="product-price">₺29.000</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="page-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1505577058444-a3dab90d4253?q=80&w=1000&auto=format&fit=crop"
+                        alt="Atölye" style="border-radius: 5px;">
+                </div>
+                <div class="about-text">
+                    <h2>Ahşabın Ruhu,<br>Tasarımın Gücü</h2>
+                    <p>Lusso Interiors olarak 1998'den beri sadece mobilya üretmiyoruz; yaşam alanlarınıza karakter
+                        katıyoruz. İtalya'nın tasarım disiplinini, Anadolu'nun usta işçiliği ile harmanlıyoruz.</p>
+                    <p>Kullandığımız her ceviz ağacı, her meşe parça, sürdürülebilir ormanlardan seçilir ve en az 40 yıl
+                        kurutulduktan sonra işlenir. Bizim için lüks, pahalı olmak değil; nesilden nesile
+                        aktarılabilmektir.</p>
+
+                    <div class="stat-box">
+                        <div class="stat">
+                            <h3>25+</h3>
+                            <span>Yıllık Tecrübe</span>
+                        </div>
+                        <div class="stat">
+                            <h3>400+</h3>
+                            <span>Özel Tasarım</span>
+                        </div>
+                        <div class="stat">
+                            <h3>%100</h3>
+                            <span>El İşçiliği</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="page-section">
+        <div class="contact-wrapper">
+            <div class="contact-info">
+                <h2>Bize Ulaşın</h2>
+                <div class="info-item">
+                    <h4>MAĞAZA & SHOWROOM</h4>
+                    <p>Modoko Mobilyacılar Sitesi<br>3. Cadde No: 45, Ümraniye<br>İstanbul, Türkiye</p>
+                </div>
+                <div class="info-item">
+                    <h4>İLETİŞİM</h4>
+                    <p>+90 (216) 555 01 99</p>
+                    <p>info@lussointeriors.com.tr</p>
+                </div>
+                <div class="info-item">
+                    <h4>ÇALIŞMA SAATLERİ</h4>
+                    <p>Pzt - Cmt: 09:00 - 20:00</p>
+                    <p>Pazar: 11:00 - 18:00</p>
+                </div>
+            </div>
+
+            <div class="contact-form-area">
+                <h3 style="margin-bottom: 30px; font-size: 2rem;">İç Mimarımız Sizi Arasın</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Adınız Soyadınız">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="E-posta Adresiniz">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-control" placeholder="Telefon Numaranız">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" rows="5"
+                            placeholder="İlgilendiğiniz ürün veya projeniz..."></textarea>
+                    </div>
+                    <button type="button" class="btn-primary" style="width: 100%;">GÖNDER</button>
+                </form>
+            </div>
+        </div>
+        <div style="width: 100%; height: 400px; overflow: hidden;">
+            <img src="https://maps.googleapis.com/maps/api/staticmap?center=41.0082,28.9784&zoom=13&size=1600x400&maptype=roadmap&style=feature:all|saturation:-100|lightness:30&key=YOUR_API_KEY_HERE"
+                alt="Harita Görünümü" style="width:100%; height:100%; object-fit: cover; opacity: 0.8;">
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-logo">Lusso Interiors</div>
+        <div class="footer-links">
+            <a href="#">Kullanım Koşulları</a>
+            <a href="#">Gizlilik Politikası</a>
+            <a href="#">Katalog İndir</a>
+        </div>
+        <div class="copyright">&copy; 2024 Lusso Interiors. Tüm hakları saklıdır.</div>
+    </footer>
+
+    <script>
+        // Hamburger Menu Toggle
+        function toggleMenu() {
+            const nav = document.getElementById('mobileNav');
+            const hamburger = document.querySelector('.hamburger');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+
+            nav.classList.toggle('active');
+            hamburger.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        // Sayfa Geçişi
+        function showPage(pageId) {
+            // Menüyü kapat
+            const nav = document.getElementById('mobileNav');
+            const hamburger = document.querySelector('.hamburger');
+            const overlay = document.querySelector('.mobile-menu-overlay');
+            nav.classList.remove('active');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('active');
+
+            // Tüm sayfaları gizle
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Seçilen sayfayı göster
+            document.getElementById(pageId).classList.add('active');
+
+            // Menü linkini aktif yap
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Sayfanın en üstüne kaydır
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+
+</html>
