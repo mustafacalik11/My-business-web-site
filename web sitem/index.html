@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Çalık Yazılım | Profesyonel Web Çözümleri</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* --- GENEL AYARLAR --- */
+        :root {
+            --primary: #0f172a;
+            /* Koyu Lacivert */
+            --accent: #3b82f6;
+            /* Canlı Mavi */
+            --text: #334155;
+            /* Gri Metin */
+            --light: #f8fafc;
+            /* Arka Plan */
+            --whatsapp: #25D366;
+            --phone: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--light);
+            scroll-behavior: smooth;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Outfit', sans-serif;
+            letter-spacing: -0.02em;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 15px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 75px;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--primary);
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .btn-nav {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-nav:hover {
+            background: var(--accent);
+        }
+
+        /* --- HERO (GİRİŞ) --- */
+        .hero {
+            padding: 200px 0 140px;
+            text-align: center;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#3b82f6 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            color: #ffffff;
+            font-weight: 800;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .btn-large {
+            padding: 18px 45px;
+            font-size: 1.2rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 50px;
+            display: inline-block;
+            font-weight: bold;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+            }
+
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+            }
+        }
+
+        /* --- ORTAK SECTIONS --- */
+        .section {
+            padding: 90px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* --- KARTLAR --- */
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 24px;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            transition: all 0.4s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .icon {
+            font-size: 35px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: inline-block;
+            background: #eff6ff;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        /* --- DEMO KARTLARI --- */
+        .demo-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f1f5f9;
+            transition: 0.3s;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .demo-header {
+            height: 160px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        .demo-content {
+            padding: 25px;
+        }
+
+        .demo-content h3 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .demo-note {
+            font-size: 0.8rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .demo-link {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            border: 2px solid;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .demo-link:hover {
+            background: currentColor;
+            color: white !important;
+        }
+
+        /* --- FİYATLAR --- */
+        .price-card {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            text-align: center;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            position: relative;
+            transition: 0.4s;
+        }
+
+        .price-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+        }
+
+        .price-card.popular {
+            background: #0f172a;
+            border: 2px solid var(--accent);
+            transform: scale(1.05);
+            z-index: 10;
+            color: white;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .price-card.popular:hover {
+            transform: scale(1.05) translateY(-8px);
+        }
+
+        .price-card.popular h3,
+        .price-card.popular p,
+        .price-card.popular .price {
+            color: #ffffff;
+        }
+
+        .price-card.popular li {
+            color: #cbd5e1;
+        }
+
+        .price-card.popular li span {
+            color: #4ade80;
+        }
+
+        .price-card.popular .sub-price {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-top: -15px;
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 20px 0 5px;
+        }
+
+        .features-list {
+            text-align: left;
+            margin: 30px 0;
+        }
+
+        .features-list li {
+            margin-bottom: 12px;
+            font-size: 0.95rem;
+            color: #475569;
+            display: flex;
+            align-items: center;
+        }
+
+        .features-list li span {
+            color: var(--whatsapp);
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .btn-price {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #f8fafc;
+            color: var(--primary);
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-price:hover {
+            background: var(--whatsapp);
+            color: white;
+            border-color: var(--whatsapp);
+        }
+
+        /* --- İLETİŞİM --- */
+        .contact-section {
+            background: #0f172a;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .contact-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 769px) {
+            .contact-wrapper {
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: center;
+            }
+
+            .contact-form {
+                flex: 1;
+                max-width: 500px;
+            }
+
+            .contact-grid {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                max-width: 350px;
+            }
+        }
+
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: left;
+            color: var(--text);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 20px;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .btn-call {
+            background: var(--phone);
+        }
+
+        .btn-wa-big {
+            background: var(--whatsapp);
+        }
+
+        /* --- MOBİL --- */
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            margin: 5px auto;
+            background-color: var(--primary);
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+                z-index: 1001;
+            }
+
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 75px;
+                flex-direction: column;
+                background: white;
+                width: 100%;
+                height: calc(100vh - 75px);
+                text-align: center;
+                transition: 0.3s;
+                padding-top: 50px;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .btn-nav {
+                display: none;
+            }
+
+            .hamburger.active .bar:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active .bar:nth-child(1) {
+                transform: translateY(8px) rotate(45deg);
+            }
+
+            .hamburger.active .bar:nth-child(3) {
+                transform: translateY(-8px) rotate(-45deg);
+            }
+
+            .hero {
+                padding: 140px 0 100px;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Çalık<span>Yazılım</span></div>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#hizmetler">Hizmetler</a></li>
+                    <li><a href="#ornekler">Örnekler</a></li>
+                    <li><a href="#paketler">Fiyatlar</a></li>
+                    <li><a href="#iletisim">İletişim</a></li>
+                </ul>
+                <a href="#iletisim" class="btn-nav">Teklif Al</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1 data-aos="fade-up">Siz İşinize Bakın <br>Web Siteniz Müşteri Getirsin!</h1>
+            <p data-aos="fade-up">Dükkanınız kapalıyken bile çalışan, Google uyumlu ve profesyonel web sitenizi 48 saatte kuruyoruz. Dijital dünyada yerinizi hemen ayırtın.</p>
+            <a href="#paketler" class="btn-large">Fiyatı Gör & Başla</a>
+        </div>
+    </section>
+
+    <section id="hizmetler" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Neler Yapıyoruz?</h2>
+                <p>Karmaşık kodlarla uğraşmanıza gerek yok, anahtar teslim çözüm.</p>
+            </div>
+            <div class="grid">
+                <div class="card" data-aos="fade-up">
+                    <div class="icon">📱</div>
+                    <h3>Mobil Uyumlu Tasarım</h3>
+                    <p>Müşterileriniz telefondan girdiğinde siteniz kusursuz görünür ve kolayca kullanılır.</p>
+                </div>
+                <div class="card" data-aos="fade-up">
+                    <div class="icon">📍</div>
+                    <h3>Google Harita Kaydı</h3>
+                    <p>İşletmenizi haritalara ekliyoruz, "en yakın tesisatçı/avukat" aramalarında çıkın.</p>
+                </div>
+                <div class="card" data-aos="fade-up">
+                    <div class="icon">🚀</div>
+                    <h3>Hızlı Teslimat</h3>
+                    <p>İşinizi aksatmadan, 48 saat içinde sitenizi yayına alıyoruz.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ornekler" class="section" style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Örnek Tasarımlar</h2>
+                <p>Siz hayal edin, biz kodlayalım. İşte referanslarımız:</p>
+            </div>
+            <div class="grid" style="justify-content: center;">
+
+                <div class="demo-card" data-aos="fade-up">
+                    <div class="demo-header" style="background: linear-gradient(135deg, #1c1c1c, #c5a059);">
+                        LUSSO
+                    </div>
+                    <div class="demo-content">
+                        <h3>Lusso Interiors</h3>
+                        <span class="demo-note" style="background:#fef3c7; color:#b45309; border: 1px solid #fcd34d;">
+                            ✓ Premium Mobilya
+                        </span>
+                        <p style="font-size:0.9rem; color:#64748b; margin-top:10px;">
+                            Lüks mağazalar için modern ve prestijli tasarım.
+                        </p>
+                        <a href="lusso.html" target="_blank" class="demo-link"
+                            style="border-color:#c5a059; color:#c5a059;">
+                            Projeyi İncele →
+                        </a>
+                    </div>
+                </div>
+
+                <div class="demo-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="demo-header" style="background: linear-gradient(135deg, #000000, #434343);">
+                        <span style="color: #d4af37;">GRAND BARBER</span>
+                    </div>
+                    <div class="demo-content">
+                        <h3>Grand Barber Shop</h3>
+                        <span class="demo-note" style="background:#333; color:#d4af37; border: 1px solid #d4af37;">
+                            ✓ Dark Mode & Randevu
+                        </span>
+                        <p style="font-size:0.9rem; color:#64748b; margin-top:10px;">
+                            Kuaförler için randevu ve fiyat listeli şık tasarım.
+                        </p>
+                        <a href="berber.html" target="_blank" class="demo-link" style="border-color:#000; color:#000;">
+                            Projeyi İncele →
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <p style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: #94a3b8;">
+                *Bu projeler Çalık Yazılım tarafından özel olarak tasarlanmıştır.
+            </p>
+        </div>
+    </section>
+
+    <section id="paketler" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Şeffaf Fiyatlandırma</h2>
+                <p>Sürpriz ödeme yok. Her şey açık ve net.</p>
+            </div>
+            <div class="grid" style="justify-content: center;">
+
+                <div class="price-card popular" data-aos="fade-up">
+                    <div class="badge">EN ÇOK TERCİH EDİLEN</div>
+                    <h3>Anahtar Teslim Web Sitesi</h3>
+                    <div class="price">₺1.500<span style="font-size:1rem; font-weight:normal;"> /tek sefer</span></div>
+                    <div class="sub-price">+ ₺200 /ay (Sunucu & Bakım Bedeli)</div>
+
+                    <p style="color:#e2e8f0; margin-bottom:20px;">İşletmeniz için profesyonel başlangıç.</p>
+
+                    <ul class="features-list">
+                        <li><span>✓</span> Mobil Uyumlu Modern Tasarım</li>
+                        <li><span>✓</span> Google Harita Kaydı Hediyesi</li>
+                        <li><span>✓</span> WhatsApp & Arama Butonları</li>
+                        <li><span>✓</span> 7/24 Teknik Destek</li>
+                        <li><span>✓</span> Alan Adı (Domain) Dahil</li>
+                    </ul>
+                    <a href="https://wa.me/905447213909?text=1500 TL'lik paket için görüşmek istiyorum."
+                        class="btn-price" style="background:var(--accent); color:white; border:none;">Hemen Başla</a>
+                </div>
+
+                <div class="price-card" data-aos="fade-up" data-aos-delay="100">
+                    <h3>Yıllık Avantaj Paketi</h3>
+                    <div class="price">₺3.500<span style="font-size:1rem; font-weight:normal;"> /yıllık</span></div>
+                    <p style="color:#64748b; font-size:0.9rem;">Hem kurulumu yapalım hem de 1 yıllık sunucu ücretini
+                        peşin ödeyin, kafanız rahat olsun.</p>
+                    <ul class="features-list">
+                        <li><span>✓</span> <strong>Kurulum Ücreti Dahil</strong></li>
+                        <li><span>✓</span> <strong>1 Yıl Boyunca Aylık Ödeme Yok</strong></li>
+                        <li><span>✓</span> Öncelikli Destek Hattı</li>
+                        <li><span>✓</span> Ücretsiz İçerik Güncelleme</li>
+                    </ul>
+                    <a href="https://wa.me/905447213909?text=Yıllık paket (3500 TL) hakkında bilgi almak istiyorum."
+                        class="btn-price">Teklif İste</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="iletisim" class="contact-section">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Projenizi Hayata Geçirelim</h2>
+            <p style="opacity: 0.8; margin-bottom: 50px;">Aşağıdaki formu doldurun veya bizi hemen arayın.</p>
+
+            <div class="contact-wrapper">
+                <div class="contact-form" data-aos="fade-up">
+                    <form action="https://formsubmit.co/clkyasin28@gmail.com" method="POST">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_subject" value="Yeni Web Tasarım Talebi!">
+                        <div class="form-group">
+                            <label>Ad Soyad</label>
+                            <input type="text" name="name" class="form-control" placeholder="Adınız Soyadınız" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefon Numarası</label>
+                            <input type="tel" name="phone" class="form-control" placeholder="05XX XXX XX XX" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Mesajınız</label>
+                            <textarea name="message" class="form-control" rows="4"
+                                placeholder="Hangi sektör? Beklentileriniz neler?" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit">Teklif Al</button>
+                    </form>
+                </div>
+
+                <div class="contact-grid" data-aos="fade-up" data-aos-delay="100">
+                    <a href="tel:05447213909" class="contact-btn btn-call">📞 Hemen Ara</a>
+                    <a href="https://wa.me/905447213909?text=Merhaba,%20web%20site%20teklifi%20almak%20istiyorum."
+                        target="_blank" class="contact-btn btn-wa-big">💬 WhatsApp'tan Yaz</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p style="opacity:0.7;">© 2025 Çalık Yazılım. Tüm Hakları Saklıdır.</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
