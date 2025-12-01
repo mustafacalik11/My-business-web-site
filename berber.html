@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Barber | Erkek Bakım Merkezi</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* --- TEMEL AYARLAR (DARK THEME) --- */
+        :root {
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --gold: #d4af37;
+            --text-light: #e0e0e0;
+            --text-gray: #a0a0a0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Playfair Display', Georgia, serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            width: 100%;
+            display: block;
+        }
+
+        /* --- HEADER --- */
+        header {
+            padding: 20px 40px;
+            background: rgba(18, 18, 18, 0.95);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 3px;
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--gold);
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: black;
+            padding: 12px 28px;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            border: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            background: #b5952f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+        }
+
+        /* --- SAYFA YAPISI --- */
+        .page-section {
+            display: none;
+            padding-top: 80px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* --- ANASAYFA --- */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=2000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: #ddd;
+        }
+
+        /* --- HİZMETLER & FİYATLAR --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: var(--gold);
+        }
+
+        .price-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .price-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border: 1px solid #333;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .price-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
+        }
+
+        .price-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .price-card h3 {
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .price-value {
+            font-size: 2rem;
+            color: var(--gold);
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .price-desc {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+
+        /* Fiyat Listesi Tablosu */
+        .price-list-item {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #444;
+            padding: 15px 0;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            font-weight: bold;
+            color: white;
+        }
+
+        .item-price {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* --- GALERİ --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item img {
+            height: 300px;
+            object-fit: cover;
+            filter: grayscale(80%);
+            transition: 0.4s;
+            cursor: pointer;
+        }
+
+        .gallery-item img:hover {
+            filter: grayscale(0%);
+            transform: scale(1.02);
+        }
+
+        /* --- İLETİŞİM --- */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .form-control:focus {
+            border-color: var(--gold);
+            outline: none;
+        }
+
+        footer {
+            background: #000;
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid #333;
+            color: #666;
+        }
+
+        /* --- HAMBURGER MENU --- */
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            background: var(--gold);
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            header .btn-gold {
+                display: none;
+            }
+
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: rgba(18, 18, 18, 0.98);
+                backdrop-filter: blur(10px);
+                padding: 80px 30px 30px;
+                transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                z-index: 999;
+                box-shadow: -5px 0 20px rgba(0, 0, 0, 0.5);
+            }
+
+            nav.active {
+                right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            nav li {
+                border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+                padding: 20px 0;
+                opacity: 0;
+                transform: translateX(20px);
+                animation: slideInMenuItem 0.4s ease forwards;
+            }
+
+            nav.active li:nth-child(1) {
+                animation-delay: 0.1s;
+            }
+
+            nav.active li:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+
+            nav.active li:nth-child(3) {
+                animation-delay: 0.3s;
+            }
+
+            nav.active li:nth-child(4) {
+                animation-delay: 0.4s;
+            }
+
+            @keyframes slideInMenuItem {
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            nav a {
+                font-size: 1.1rem;
+                display: block;
+                padding: 5px 0;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+                line-height: 1.2;
+            }
+
+            .hero-content p {
+                font-size: 1rem;
+                padding: 0 20px;
+            }
+
+            .contact-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 40px 20px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .price-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery-item img {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">GRAND<span>BARBER</span></div>
+        <nav id="mobileMenu">
+            <ul>
+                <li><a onclick="showPage('home')" class="nav-link active">Anasayfa</a></li>
+                <li><a onclick="showPage('services')" class="nav-link">Hizmetler</a></li>
+                <li><a onclick="showPage('gallery')" class="nav-link">Galeri</a></li>
+                <li><a onclick="showPage('contact')" class="nav-link">Randevu</a></li>
+            </ul>
+        </nav>
+        <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <button class="btn-gold" onclick="showPage('contact')">Randevu Al</button>
+    </header>
+
+    <div id="home" class="page-section active">
+        <section class="hero">
+            <div class="hero-content">
+                <h1>TARZIN SENİN<br>İMZANDIR</h1>
+                <p>Klasik tıraş deneyimini modern dokunuşlarla birleştiriyoruz. Sadece saç kesimi değil, gerçek bir
+                    beyefendi bakımı.</p>
+                <button class="btn-gold" onclick="showPage('services')">Fiyatları Gör</button>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="section-title">NEDEN GRAND?</div>
+            <div class="price-grid">
+                <div class="price-card">
+                    <span class="price-icon">✂️</span>
+                    <h3>Usta Eller</h3>
+                    <p class="price-desc">15 yıllık tecrübeli kadro ile yüz hatlarınıza en uygun kesim.</p>
+                </div>
+                <div class="price-card">
+                    <span class="price-icon">🧖‍♂️</span>
+                    <h3>Premium Bakım</h3>
+                    <p class="price-desc">Sıcak havlu, buhar maskesi ve özel losyonlarla cildinizi şımartın.</p>
+                </div>
+                <div class="price-card">
+                    <span class="price-icon">☕</span>
+                    <h3>İkramlar</h3>
+                    <p class="price-desc">Sıranızı beklerken taze kahve ve içecek ikramımızdır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="services" class="page-section">
+        <div class="container">
+            <div class="section-title">HİZMET MENÜSÜ</div>
+
+            <div class="contact-layout">
+                <div>
+                    <h3
+                        style="color:white; margin-bottom:20px; border-bottom: 2px solid var(--gold); display:inline-block;">
+                        PAKETLER</h3>
+                    <div class="price-card" style="text-align: left; margin-bottom: 20px;">
+                        <h3>V.I.P DAMAT PAKETİ</h3>
+                        <p class="price-desc">Saç + Sakal + Cilt Bakımı + Manikür + Fön</p>
+                        <div class="price-value">2.500 ₺</div>
+                    </div>
+                    <div class="price-card" style="text-align: left;">
+                        <h3>FULL BAKIM</h3>
+                        <p class="price-desc">Saç Kesimi + Yıkama + Maske + Ağda</p>
+                        <div class="price-value">750 ₺</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3
+                        style="color:white; margin-bottom:20px; border-bottom: 2px solid var(--gold); display:inline-block;">
+                        FİYAT LİSTESİ</h3>
+
+                    <div class="price-list-item">
+                        <span class="item-name">Saç Kesimi & Yıkama</span>
+                        <span class="item-price">350 ₺</span>
+                    </div>
+                    <div class="price-list-item">
+                        <span class="item-name">Sakal Tıraşı (Sıcak Havlu)</span>
+                        <span class="item-price">200 ₺</span>
+                    </div>
+                    <div class="price-list-item">
+                        <span class="item-name">Saç & Sakal Kombin</span>
+                        <span class="item-price">500 ₺</span>
+                    </div>
+                    <div class="price-list-item">
+                        <span class="item-name">Çocuk Tıraşı</span>
+                        <span class="item-price">250 ₺</span>
+                    </div>
+                    <div class="price-list-item">
+                        <span class="item-name">Cilt Bakımı (Maske)</span>
+                        <span class="item-price">300 ₺</span>
+                    </div>
+                    <div class="price-list-item">
+                        <span class="item-name">Kaş Dizayn / Ağda</span>
+                        <span class="item-price">100 ₺</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="gallery" class="page-section">
+        <div class="container">
+            <div class="section-title">YAPTIĞIMIZ İŞLER</div>
+            <p style="text-align: center; color: #aaa; margin-bottom: 30px;">Instagram'da bizi takip edin: @grandbarber
+            </p>
+
+            <div class="gallery-grid">
+                <div class="gallery-item"><img
+                        src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800&auto=format&fit=crop"
+                        alt="Saç Kesimi"></div>
+                <div class="gallery-item"><img
+                        src="https://images.unsplash.com/photo-1599351431202-6e0c051cd708?q=80&w=800&auto=format&fit=crop"
+                        alt="Sakal"></div>
+                <div class="gallery-item"><img
+                        src="https://images.unsplash.com/photo-1503951914875-452162b7f30a?q=80&w=800&auto=format&fit=crop"
+                        alt="Berber"></div>
+                <div class="gallery-item"><img
+                        src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=800&auto=format&fit=crop"
+                        alt="Makas"></div>
+                <div class="gallery-item"><img
+                        src="https://images.unsplash.com/photo-1593702295094-aea8c5c13d7e?q=80&w=800&auto=format&fit=crop"
+                        alt="Tıraş"></div>
+                <div class="gallery-item"><img
+                        src="https://images.unsplash.com/photo-1512690459411-b9245aed8ad5?q=80&w=800&auto=format&fit=crop"
+                        alt="Dükkan"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="page-section">
+        <div class="container">
+            <div class="section-title">RANDEVU AL</div>
+
+            <div class="contact-layout">
+                <div>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Adınız Soyadınız">
+                        </div>
+                        <div class="form-group">
+                            <input type="tel" class="form-control" placeholder="Telefon Numaranız">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" style="color: #aaa;">
+                                <option>Hizmet Seçiniz</option>
+                                <option>Saç Kesimi</option>
+                                <option>Sakal Tıraşı</option>
+                                <option>Full Bakım</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="date" class="form-control">
+                        </div>
+                        <button type="button" class="btn-gold" style="width: 100%;">GÖNDER</button>
+                    </form>
+                </div>
+
+                <div style="background: var(--bg-card); padding: 30px; border: 1px solid #333;">
+                    <h3 style="color: white; margin-bottom: 20px;">İLETİŞİM</h3>
+                    <p style="margin-bottom: 15px; color: #aaa;">📍 Bağdat Caddesi No: 145, Kadıköy / İstanbul</p>
+                    <p style="margin-bottom: 15px; color: #aaa;">📞 +90 (216) 555 02 02</p>
+                    <p style="margin-bottom: 15px; color: #aaa;">🕒 Pzt - Cmt: 10:00 - 22:00</p>
+                    <br>
+                    <div
+                        style="width: 100%; height: 200px; background: #333; display: flex; align-items: center; justify-content: center; color: #555;">
+                        HARİTA BURADA GÖRÜNECEK
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="logo" style="margin-bottom: 10px;">GRAND<span>BARBER</span></div>
+        <p>&copy; 2024 Grand Barber. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            // Tüm sayfaları gizle
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // İstenen sayfayı göster
+            document.getElementById(pageId).classList.add('active');
+
+            // Menü aktifliğini güncelle
+            const links = document.querySelectorAll('.nav-link');
+            links.forEach(link => link.classList.remove('active'));
+
+            // Mobil menüyü kapat
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.getElementById('hamburger');
+            if (mobileMenu && hamburger) {
+                mobileMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        function toggleMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.getElementById('hamburger');
+
+            mobileMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        // Menü dışına tıklandığında menüyü kapat
+        document.addEventListener('click', function (event) {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.getElementById('hamburger');
+
+            if (!mobileMenu.contains(event.target) && !hamburger.contains(event.target)) {
+                mobileMenu.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+
+</html>
